@@ -1,16 +1,15 @@
 
 import { iconLink } from "../../utils/imageLinks";
-import { useState,useRef } from "react";
+import { useState } from "react";
 
 import NavBar from "../navbar/NavBar";
 import MessageCard from "../MessageCard/MesaageCard";
 import InputBox from "../InputBox/InputBox";
 const NewChat = ()=>{
-    const [messages,setMessage] = useState(["aaa","aaa","aaa","asaas"]);
-    const message = useRef("");
+    const [messages,setMessage] = useState([]);
 
-    const setMessages = ()=>{
-        setMessage([...messages,message.current.value])
+    const setMessages = (text)=>{
+        setMessage([...messages,text])
     }
 
     console.log("message list",messages)
@@ -37,7 +36,7 @@ const NewChat = ()=>{
                         </div>
                     )
                 }
-                <InputBox></InputBox>
+                <InputBox setMessages={setMessages}/>
             </div>
         </div>
     )
