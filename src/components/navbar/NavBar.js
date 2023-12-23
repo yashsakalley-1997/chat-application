@@ -19,7 +19,7 @@ const NavBar = ()=>{
     return (
         <div className="bg-black w-[25%] p-5 h-screen text-white">
             <div className="flex justify-between mb-10">
-                <img src={iconLink} alt="icon"></img>
+                <img className="h-6" src={iconLink} alt="icon"></img>
                 New Chat
             </div>
             {
