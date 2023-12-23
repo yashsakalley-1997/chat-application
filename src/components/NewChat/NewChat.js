@@ -10,6 +10,7 @@ import Sidebar from "../SideBar/SideBar";
 import { iconLink } from "../../utils/imageLinks";
 import { setChat } from "../../store/chatStore";
 import { fetchResponse } from "../../utils/apis";
+import { returnChats } from "../../utils/hooks";
 const NewChat = ()=>{
     const dispatch = useDispatch();
     const [screensize,setScreenSize] = useState("");
@@ -17,7 +18,7 @@ const NewChat = ()=>{
     const [id,setId] = useState(1);
 
     const chats = useSelector((store)=>store?.chatStore?.chats)
-    console.log("hellooo",chats)
+    console.log("hellooo",returnChats(chats))
     useEffect(() => {
         const updateScreenSize = () => {
             const width = window.innerWidth;
