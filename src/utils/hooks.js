@@ -31,13 +31,13 @@ export const returnWeatherDetails = (object)=>{
 
 export const returnDate = ()=>{
     const today = new Date();
-    const yesterday = new Date(today);
-    yesterday.setDate(today.getDate() - 1);
-
-    const year = yesterday.getFullYear();
-    const month = (yesterday.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-indexed
-    const day = yesterday.getDate().toString().padStart(2, '0');
-
-    const yesterdayFormatted = `${year}-${month}-${day}`;
-    return yesterdayFormatted;
+  
+    today.setMonth(today.getMonth() - 1);
+  
+    const year = today.getFullYear();
+    const month = (today.getMonth() + 1).toString().padStart(2, '0');
+    const day = today.getDate().toString().padStart(2, '0');
+  
+    const oneMonthBefore = `${year}-${month}-${day}`;
+    return oneMonthBefore;
 }

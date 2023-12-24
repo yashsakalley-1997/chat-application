@@ -61,11 +61,11 @@ export const fetchWeather = async (message,id)=>{
       const weatherData = await getWeather(str);
       return weatherData
     }
-    return "Unable to find weather with the given input";
+    throw "Unable to find weather with the given input";
   }
 
   catch(err){
-    throw new Error("Unable to find weather with the given input")
+    throw "Unable to find weather with the given input";
   }
 }
 
@@ -97,11 +97,11 @@ export const fetchNews = async (message,id)=>{
       const newsData = await getNews(str);
       return newsData?.data?.articles
     }
-    return "Unable to find weather with the given input";
+    throw "Unable to find news articles with the given input";
   }
 
   catch(err){
-    throw new Error("Unable to find news with the given input")
+    throw "Unable to find news with the given input";
   }
   
 }
