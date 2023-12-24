@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
+import { useNavigate,useLocation } from 'react-router-dom';
+import { navMenu } from '../../utils/apiConstants';
 
 const Sidebar = () => {
+  const navigate = useNavigate();
+  const {pathname} = useLocation();
   const [isMenuOpen, setMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -11,20 +15,6 @@ const Sidebar = () => {
     setMenuOpen(false);
   };
 
-  const navMenu = [
-    {
-      displayName: "Weather App",
-      link: "/weather",
-    },
-    {
-      displayName: "News App",
-      link: "/news",
-    },
-    {
-      displayName: "Task Manager App",
-      link: "/task-manager",
-    },
-  ];
 
   return (
     <div className="flex">
@@ -44,8 +34,11 @@ const Sidebar = () => {
         </button>
         {navMenu.map((elem, index) => (
           <div
-            className="mb-3 bg-[#202123] p-3 rounded-lg transition-transform duration-300 transform hover:scale-105"
+            className={`mb-3 ${pathname===elem?.link?"bg-[#202123]":""} p-3 rounded-lg transition-transform duration-300 transform hover:scale-105`}
             key={index}
+            onClick={()=>{
+              navigate(elem?.link)
+            }}
           >
             {elem?.displayName}
           </div>

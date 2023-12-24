@@ -3,27 +3,26 @@ import { useEffect, useState,useMemo, useRef } from "react";
 import { useSelector,useDispatch } from "react-redux";
 
 import NavBar from "../navbar/NavBar";
-import MessageCard from "../MessageCard/MesaageCard";
+import NewsCard from "./NewsCard/NewsCard";
 import InputBox from "../InputBox/InputBox";
 import Sidebar from "../SideBar/SideBar";
 
 import { iconLink } from "../../utils/imageLinks";
-import { setChat } from "../../store/chatStore";
-import { fetchResponse } from "../../utils/apis";
-import { returnChats } from "../../utils/hooks";
+import { setNewsChat } from "../../store/newsAppStore";
+import { fetchNews} from "../../utils/apis";
+import { returnChats,returnWeatherDetails } from "../../utils/hooks";
 
-const NewChat = ()=>{
+const NewsApp = ()=>{
     const dispatch = useDispatch();
     const [screensize,setScreenSize] = useState("");
     const [id,setId] = useState(1);
     const [loading,setLoading] = useState(false);
     const contentRef = useRef(null);
-    const chats = useSelector((store)=>store?.chatStore?.chats)
-    
+    const chats = useSelector((store)=>store?.newsAppStore?.newsChats)
+
     const chatsList = useMemo(()=>{
         return returnChats(chats)
     },[JSON.stringify(chats)])
-
 
     useEffect(() => {
         const updateScreenSize = () => {
@@ -47,19 +46,18 @@ const NewChat = ()=>{
     const setMessages = (text)=>{
         setId(id+1)
         setLoading(true)
-        dispatch(setChat({
+        dispatch(setNewsChat({
             id,question:text,response:"Responding..."
         }))
-        fetchResponse(text,id).then((res)=>{
+        fetchNews(text,id).then((res)=>{
             setLoading(false)
-            const {choices} = res;
-            dispatch(setChat({
-                id,question:text,response:choices[0]?.message?.content,
+            dispatch(setNewsChat({
+                id,question:text,response:res,
             }))
         }).catch((err)=>{
             setLoading(false)
-            dispatch(setChat({
-                id,question:text,response:"Some error occurred",
+            dispatch(setNewsChat({
+                id,question:text,response:err
             }))
         }).finally(()=>{
             setLoading(false)
@@ -83,14 +81,14 @@ const NewChat = ()=>{
                         <div className="flex flex-col gap-5 my-auto">
                             <img className="h-10" src={iconLink} alt="icon"/>
                             <h1 className="text-white text-2xl font-semibold mx-auto">
-                                How can I help you today?
+                                ChatNBX News App
                             </h1>
                         </div>
                     ):(
                         <div ref={contentRef} className="overflow-y-auto">
                             { 
                                 chatsList.map((elem,index)=>(
-                                    <MessageCard message={elem} key={index}/>
+                                    <NewsCard message={elem} key={index}/>
                                 ))
                             }
                         </div>
@@ -103,4 +101,4 @@ const NewChat = ()=>{
 }
 
 
-export default NewChat;
+export default NewsApp;

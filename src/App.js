@@ -1,12 +1,11 @@
 import { Provider } from "react-redux";
 import appStore from "./store/appStore";
-
-import NewChat from "./components/NewChat/NewChat";
+import Routes from "./components/Routes/Routes";
 function App() {
   return (
     <div>
       <Provider store={appStore}>
-        <NewChat/>
+        <Routes/>
       </Provider>
     </div>
   );

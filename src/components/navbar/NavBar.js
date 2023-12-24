@@ -1,21 +1,10 @@
+import { useNavigate,useLocation } from "react-router-dom";
+
+import { navMenu } from "../../utils/apiConstants";
 import { iconLink } from "../../utils/imageLinks";
 const NavBar = ()=>{
-    const navMenu = [
-        {
-            displayName:"Weather App",
-            link:"/weather",
-        }
-        ,
-        {
-            displayName:"News App",
-            link:"/news"
-        }
-        ,
-        {
-            displayName:"Task Manager App",
-            link:"/task-manager"
-        }
-    ]
+    const navigate = useNavigate();
+    const {pathname} = useLocation();
     return (
         <div className="bg-black w-[25%] p-5 h-screen text-white">
             <div className="flex justify-between mb-10">
@@ -24,7 +13,7 @@ const NavBar = ()=>{
             </div>
             {
                 navMenu.map((elem,index)=>(
-                    <div className="mb-3 bg-[#202123] p-3 rounded-lg" key={index}>
+                    <div onClick={()=>navigate(elem?.link)} className={`mb-3 p-3 ${pathname === elem?.link?"bg-[#202123] rounded-lg":""}`} key={index}>
                         {elem?.displayName}
                     </div>
                 ))

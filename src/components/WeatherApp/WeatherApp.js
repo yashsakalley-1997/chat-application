@@ -8,22 +8,21 @@ import InputBox from "../InputBox/InputBox";
 import Sidebar from "../SideBar/SideBar";
 
 import { iconLink } from "../../utils/imageLinks";
-import { setChat } from "../../store/chatStore";
-import { fetchResponse } from "../../utils/apis";
-import { returnChats } from "../../utils/hooks";
+import { setWeatherChat } from "../../store/weatherAppStore";
+import { fetchWeather} from "../../utils/apis";
+import { returnChats,returnWeatherDetails } from "../../utils/hooks";
 
-const NewChat = ()=>{
+const WeatherApp = ()=>{
     const dispatch = useDispatch();
     const [screensize,setScreenSize] = useState("");
     const [id,setId] = useState(1);
     const [loading,setLoading] = useState(false);
     const contentRef = useRef(null);
-    const chats = useSelector((store)=>store?.chatStore?.chats)
-    
+    const chats = useSelector((store)=>store?.weatherAppStore?.weatherChats)
+
     const chatsList = useMemo(()=>{
         return returnChats(chats)
     },[JSON.stringify(chats)])
-
 
     useEffect(() => {
         const updateScreenSize = () => {
@@ -47,19 +46,18 @@ const NewChat = ()=>{
     const setMessages = (text)=>{
         setId(id+1)
         setLoading(true)
-        dispatch(setChat({
+        dispatch(setWeatherChat({
             id,question:text,response:"Responding..."
         }))
-        fetchResponse(text,id).then((res)=>{
+        fetchWeather(text,id).then((res)=>{
             setLoading(false)
-            const {choices} = res;
-            dispatch(setChat({
-                id,question:text,response:choices[0]?.message?.content,
+            dispatch(setWeatherChat({
+                id,question:text,response:returnWeatherDetails(res),
             }))
         }).catch((err)=>{
             setLoading(false)
-            dispatch(setChat({
-                id,question:text,response:"Some error occurred",
+            dispatch(setWeatherChat({
+                id,question:text,response:err,
             }))
         }).finally(()=>{
             setLoading(false)
@@ -83,7 +81,7 @@ const NewChat = ()=>{
                         <div className="flex flex-col gap-5 my-auto">
                             <img className="h-10" src={iconLink} alt="icon"/>
                             <h1 className="text-white text-2xl font-semibold mx-auto">
-                                How can I help you today?
+                                ChatNBX Weather App
                             </h1>
                         </div>
                     ):(
@@ -103,4 +101,4 @@ const NewChat = ()=>{
 }
 
 
-export default NewChat;
+export default WeatherApp;
