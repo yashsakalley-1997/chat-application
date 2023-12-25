@@ -2,7 +2,7 @@ import nbxIcon from "../../assets/images/chatNbxIcon.png";
 
 export const MessageCard = ({message}) =>{
     return (
-        <div className="mb-10 ml-5 md:ml-24 flex flex-col gap-5">
+        <div className="mb-10 ml-5 md:ml-24 flex flex-col gap-5 mt-10">
             <div className="flex gap-2">
                 <div className="w-9 h-9 bg-violet-500 rounded-full flex items-center justify-center text-white">Y</div>
 

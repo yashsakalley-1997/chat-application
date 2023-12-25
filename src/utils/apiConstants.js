@@ -10,10 +10,9 @@ export const messageConfig = {
     content: "You are ChatNBX"
 }
 const apiKey = process.env.REACT_APP_WEATHER_API_KEY;
-const newsApiKey = process.env.REACT_APP_NEWS_API_KEY;
 
 export const weatherApi = (str)=>`https://api.tomorrow.io/v4/weather/realtime?location=${str}&apikey=${apiKey}`;
-export const newsApi = (str)=>`https://newsapi.org/v2/everything?q=${str}&from=${returnDate()}&sortBy=publishedAt&apiKey=${newsApiKey}`;
+export const newsApi = (str)=>`https://chat-app-fzr1.onrender.com/api/news?q=${str}&from=${returnDate()}`;
 export const navMenu = [
     {
         displayName:"Chat App",
