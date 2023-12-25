@@ -17,12 +17,15 @@ export const TaskCard = ({message}) =>{
                 </div>
             </div>
 
-            <div className="flex gap-2">
-                <img className="h-10" src={nbxIcon} alt="icon"></img>
-
-                <div className="text-white">
+            <div>
+                <div className="flex gap-2">
+                    <img className="h-10" src={nbxIcon} alt="icon"></img>
                     <h3 className="text-white font-semibold text-2xl">ChatNbx</h3>
-                    {message?.response === "Yes" || card || message?.taskCreated ? <CreationCard message={message}/>:(
+                </div>
+                <div className="text-white p-2">
+                    {message?.response === "Yes" || card || message?.taskCreated ? (
+                        <CreationCard message={message}/>
+                    ):(
                         <div>
                             <div className="capitalize">{message?.response}</div>
                             {message?.response !== "Responding..." && (

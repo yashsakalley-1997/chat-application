@@ -31,7 +31,7 @@ export const MessageCard = ({message}) =>{
                             }
                         </div>
                     ):(
-                        <span className="capitalize">{message?.response}</span>
+                        <div className="capitalize pr-5">{message?.response}</div>
                     )
                     }
                 </div>
