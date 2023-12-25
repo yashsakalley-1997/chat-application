@@ -10,12 +10,11 @@ import Sidebar from "../SideBar/SideBar";
 import { iconLink } from "../../utils/imageLinks";
 import { setNewsChat } from "../../store/newsAppStore";
 import { fetchNews} from "../../utils/apis";
-import { returnChats,returnWeatherDetails } from "../../utils/hooks";
+import { returnChats } from "../../utils/hooks";
 
 const NewsApp = ()=>{
     const dispatch = useDispatch();
     const [screensize,setScreenSize] = useState("");
-    const [id,setId] = useState(1);
     const [loading,setLoading] = useState(false);
     const contentRef = useRef(null);
     const chats = useSelector((store)=>store?.newsAppStore?.newsChats)
@@ -44,7 +43,7 @@ const NewsApp = ()=>{
     }, []);
 
     const setMessages = (text)=>{
-        setId(id+1)
+        let id = chatsList.length+1;
         setLoading(true)
         dispatch(setNewsChat({
             id,question:text,response:"Responding..."

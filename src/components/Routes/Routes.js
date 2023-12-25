@@ -3,6 +3,7 @@ import { createBrowserRouter,RouterProvider } from "react-router-dom";
 import NewChat from "../NewChat/NewChat";
 import NewsApp from "../NewsApp/NewsApp";
 import WeatherApp from "../WeatherApp/WeatherApp";
+import TaskManager from "../TaskManager/TaskManager";
 
 const Routes = ()=>{
     const appRouter = createBrowserRouter([
@@ -19,6 +20,11 @@ const Routes = ()=>{
         {
             path:"/news",
             element:<NewsApp/>
+        }
+        ,
+        {
+            path:"/task-manager",
+            element:<TaskManager/>
         }
     ])
 

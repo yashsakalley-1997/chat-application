@@ -2,11 +2,25 @@ export const returnChats = (obj)=>{
     let arr = []
     Object.keys(obj).forEach((elem)=>{
         arr.push({
+            "id":obj[elem].id,
             "question":obj[elem].question,
             "response":obj[elem].response
         })
     })
 
+    return arr
+}
+
+export const returnTaskChats = (obj)=>{
+    let arr = [];
+    Object.keys(obj).forEach((elem)=>{
+        arr.push({
+            "id":obj[elem].id,
+            "question":obj[elem].question,
+            "response":obj[elem].response,
+            "taskCreated":obj[elem].taskCreated
+        })
+    })
     return arr
 }
 
@@ -40,4 +54,14 @@ export const returnDate = ()=>{
   
     const oneMonthBefore = `${year}-${month}-${day}`;
     return oneMonthBefore;
+}
+
+export const noLoadingObject = (obj)=>{
+    let output = {};
+    for(let key in obj){
+        if(obj[key].response!=="Responding..."){
+            output[key] = obj[key]
+        }
+    }
+    return output
 }

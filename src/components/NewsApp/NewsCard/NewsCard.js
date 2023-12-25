@@ -25,7 +25,7 @@ const NewsCard = ({message})=>{
                         <h4 className="mb-2">{arr.length === 0?"No articles found for given input":"News Articles"}</h4>
                         {
                             arr.map((elem,index)=>(
-                                <div className="text-left text-[#333333] bg-white p-4 mb-10 rounded-lg w-[60%]" key={index}>
+                                <div className="text-left text-[#333333] bg-white p-4 mb-10 rounded-lg w-[80%]" key={index}>
                                     <h4 className="capitalize"><span className="font-bold">Title</span>: {elem?.title}</h4>
                                     <h4 className="capitalize"><span className="font-bold">Description</span>: {elem?.description}</h4>
                                     <h4 className="capitalize"><span className="font-bold">Author</span>: {elem?.author}</h4>

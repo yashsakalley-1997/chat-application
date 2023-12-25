@@ -16,6 +16,11 @@ export const weatherApi = (str)=>`https://api.tomorrow.io/v4/weather/realtime?lo
 export const newsApi = (str)=>`https://newsapi.org/v2/everything?q=${str}&from=${returnDate()}&sortBy=publishedAt&apiKey=${newsApiKey}`;
 export const navMenu = [
     {
+        displayName:"Chat App",
+        link:"/"
+    }
+    ,
+    {
         displayName:"Weather App",
         link:"/weather",
     }
@@ -23,5 +28,10 @@ export const navMenu = [
     {
         displayName:"News App",
         link:"/news"
+    }
+    ,
+    {
+        displayName:"Task Manager App",
+        link:"/task-manager"
     }
 ]

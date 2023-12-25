@@ -3,26 +3,27 @@ import { useEffect, useState,useMemo, useRef } from "react";
 import { useSelector,useDispatch } from "react-redux";
 
 import NavBar from "../navbar/NavBar";
-import MessageCard from "../MessageCard/MesaageCard";
 import InputBox from "../InputBox/InputBox";
 import Sidebar from "../SideBar/SideBar";
+import TaskCard from "./TaskCard/TaskCard";
 
 import { iconLink } from "../../utils/imageLinks";
-import { setChat } from "../../store/chatStore";
-import { fetchResponse } from "../../utils/apis";
-import { returnChats } from "../../utils/hooks";
 
-const NewChat = ()=>{
+import { returnTaskChats, noLoadingObject } from "../../utils/hooks";
+import { scheduleTasks } from "../../utils/apis";
+import { setTaskChat } from "../../store/taskManagerStore";
+import { setLocalStorage } from "../../utils/setTasks";
+
+
+const TaskManager = ()=>{
     const dispatch = useDispatch();
     const [screensize,setScreenSize] = useState("");
     const [loading,setLoading] = useState(false);
     const contentRef = useRef(null);
-    const chats = useSelector((store)=>store?.chatStore?.chats)
-    
+    const chats = useSelector((store)=>store?.taskManagerStore?.taskChats)
     const chatsList = useMemo(()=>{
-        return returnChats(chats)
+        return returnTaskChats(chats)
     },[JSON.stringify(chats)])
-
 
     useEffect(() => {
         const updateScreenSize = () => {
@@ -35,7 +36,6 @@ const NewChat = ()=>{
             setScreenSize('Laptop/Desktop');
             }
         };
-
         updateScreenSize();
         window.addEventListener('resize', updateScreenSize);
         return () => {
@@ -44,21 +44,20 @@ const NewChat = ()=>{
     }, []);
 
     const setMessages = (text)=>{
-        let id = chatsList.length+1;
         setLoading(true)
-        dispatch(setChat({
+        const id = chatsList.length+1;
+        dispatch(setTaskChat({
             id,question:text,response:"Responding..."
         }))
-        fetchResponse(text,id).then((res)=>{
+        scheduleTasks(text).then((res)=>{
             setLoading(false)
-            const {choices} = res;
-            dispatch(setChat({
-                id,question:text,response:choices[0]?.message?.content,
+            dispatch(setTaskChat({
+                id,question:text,response:res,
             }))
         }).catch((err)=>{
             setLoading(false)
-            dispatch(setChat({
-                id,question:text,response:"Some error occurred",
+            dispatch(setTaskChat({
+                id,question:text,response:err
             }))
         }).finally(()=>{
             setLoading(false)
@@ -69,7 +68,8 @@ const NewChat = ()=>{
         if (contentRef.current) {
             contentRef.current.scrollTop = contentRef.current.scrollHeight;
         }
-    },[JSON.stringify(chats)])
+        setLocalStorage(noLoadingObject(chats))
+    },[JSON.stringify(chats)])  
 
     return (
         <div className="bg-[#343541] h-screen md:flex gap-5">
@@ -82,14 +82,14 @@ const NewChat = ()=>{
                         <div className="flex flex-col gap-5 my-auto">
                             <img className="h-10" src={iconLink} alt="icon"/>
                             <h1 className="text-white text-2xl font-semibold mx-auto">
-                                How can I help you today?
+                                ChatNBX Task Manager App
                             </h1>
                         </div>
                     ):(
                         <div ref={contentRef} className="overflow-y-auto">
                             { 
                                 chatsList.map((elem,index)=>(
-                                    <MessageCard message={elem} key={index}/>
+                                    <TaskCard message={elem} key={index}/>
                                 ))
                             }
                         </div>
@@ -102,4 +102,4 @@ const NewChat = ()=>{
 }
 
 
-export default NewChat;
+export default TaskManager;

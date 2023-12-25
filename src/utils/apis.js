@@ -3,7 +3,7 @@ import axios from "axios";
 import { max_tokens, model, stream, temperature,messageConfig, apiUrl, weatherApi, newsApi } from "./apiConstants";
 import { returnCity } from "./hooks";
 
-export const fetchResponse = async (message,id)=>{
+export const fetchResponse = async (message)=>{
     const postData = {
       temperature: temperature,
       messages: [
@@ -33,7 +33,7 @@ export const fetchResponse = async (message,id)=>{
     }
 }
 
-export const fetchWeather = async (message,id)=>{
+export const fetchWeather = async (message)=>{
   const postData = {
     temperature: temperature,
     messages: [
@@ -69,7 +69,7 @@ export const fetchWeather = async (message,id)=>{
   }
 }
 
-export const fetchNews = async (message,id)=>{
+export const fetchNews = async (message)=>{
   const postData = {
     temperature: temperature,
     messages: [
@@ -103,7 +103,37 @@ export const fetchNews = async (message,id)=>{
   catch(err){
     throw "Unable to find news with the given input";
   }
-  
+}
+
+export const scheduleTasks = async (message)=>{
+  const postData = {
+    temperature: temperature,
+    messages: [
+      messageConfig,
+      {
+        role: "user",
+        content:`Perform Intent recognition and detect if the following message wants us to do something (answer "Yes it is" in double quotes if its true, else "We cant schedule a task with the given input" in case its false) ${message}`
+      }
+    ],
+    model: model,
+    stream: stream,
+    max_tokens: max_tokens
+  }
+  try{
+    const data = await fetch(apiUrl,{
+                    method:"POST",
+                    headers:{
+                      "Content-Type":'application/json'
+                    },
+                    body:JSON.stringify(postData)
+                  })
+    const jsonData = await data.json();
+    let flag = jsonData?.choices[0]?.message?.content.includes("Yes it is");
+    return flag?"Yes":jsonData?.choices[0]?.message?.content;
+  }
+  catch(err){
+    throw "Unable to schedule tasks with the given input";
+  }
 }
 
 

@@ -15,7 +15,6 @@ import { returnChats,returnWeatherDetails } from "../../utils/hooks";
 const WeatherApp = ()=>{
     const dispatch = useDispatch();
     const [screensize,setScreenSize] = useState("");
-    const [id,setId] = useState(1);
     const [loading,setLoading] = useState(false);
     const contentRef = useRef(null);
     const chats = useSelector((store)=>store?.weatherAppStore?.weatherChats)
@@ -44,7 +43,7 @@ const WeatherApp = ()=>{
     }, []);
 
     const setMessages = (text)=>{
-        setId(id+1)
+        let id = chatsList.length+1;
         setLoading(true)
         dispatch(setWeatherChat({
             id,question:text,response:"Responding..."
