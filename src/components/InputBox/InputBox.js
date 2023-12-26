@@ -11,7 +11,6 @@ const InputBox = ({loading,setMessages})=>{
                     p-4" 
                     placeholder={(loading?"Response Loading...":"Ask Anything?")}
                     ref={textRef}
-                    disabled={loading}
                 />
                     
                 <div className="bg-[#494a54] rounded-lg flex m-2" onClick={()=>{

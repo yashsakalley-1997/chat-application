@@ -70,7 +70,7 @@ const WeatherApp = ()=>{
     },[JSON.stringify(chats)])
 
     return (
-        <div className="bg-[#343541] h-screen md:flex gap-5 mt-10">
+        <div className="bg-[#343541] h-screen md:flex gap-5">
             {
                 screensize === "Mobile"?<Sidebar/>:<NavBar/>
             } 
