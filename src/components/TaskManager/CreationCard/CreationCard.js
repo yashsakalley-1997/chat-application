@@ -1,6 +1,9 @@
 import { useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
+
+import { returnCurrentTimestamp } from "../../../utils/hooks";
 import { setTaskChat } from "../../../store/taskManagerStore";
+import { current } from "@reduxjs/toolkit";
 
 const CreationCard = ({message})=>{
     const dispatch = useDispatch();
@@ -8,20 +11,24 @@ const CreationCard = ({message})=>{
     const title = useRef(message?.taskCreated?.title);
     const startDate = useRef(message?.taskCreated?.startDate);
     const endDate = useRef(message?.taskCreated?.endDate);
+    const linkNotes = useRef(message?.taskCreated?.linkNotes)
 
     useEffect(()=>{
         title.current.value = message?.taskCreated?.title || ""
         startDate.current.value = message?.taskCreated?.startDate
         endDate.current.value = message?.taskCreated?.endDate
+        linkNotes.current.value = message?.taskCreated?.linkNotes || "";
     },[])
 
     const onFormSubmit = ()=>{
-        if(title.current.value && startDate.current.value && endDate.current.value){
+        if(title.current.value && startDate.current.value && endDate.current.value && linkNotes.current.value){
             let payload = {
                 taskCreated:{
                     title:title.current.value,
                     startDate:startDate.current.value,
                     endDate:endDate.current.value,
+                    linkNotes:linkNotes.current.value,
+                    dateCreated:returnCurrentTimestamp()
                 }
             }
             dispatch(setTaskChat({...message,...payload}))
@@ -50,6 +57,10 @@ const CreationCard = ({message})=>{
                 <div className="flex justify-between gap-2">
                     <span>Task End Date</span>
                     <input ref={endDate} type="datetime-local" className="p-2 rounded-lg border border-gray-400 focus:outline-none"/>    
+                </div>
+                <div className="flex justify-between gap-2">
+                    <span>Link Notes</span>
+                    <input ref={linkNotes} type="text" placeholder="Notes" className="p-2 rounded-lg border border-gray-400 focus:outline-none"/>    
                 </div>
                 <button onClick={()=>onFormSubmit()} className="bg-blue-400 p-2 rounded-lg">Submit</button>
                 <button

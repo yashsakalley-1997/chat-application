@@ -106,6 +106,9 @@ export const fetchNews = async (message)=>{
 }
 
 export const scheduleTasks = async (message)=>{
+  if(message.toLowerCase().includes("show all tasks")){
+    return "Above are all the tasks created by the user"
+  }
   const postData = {
     temperature: temperature,
     messages: [

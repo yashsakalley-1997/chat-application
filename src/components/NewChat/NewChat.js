@@ -10,14 +10,14 @@ import Sidebar from "../SideBar/SideBar";
 import { iconLink } from "../../utils/imageLinks";
 import { setChat } from "../../store/chatStore";
 import { fetchResponse } from "../../utils/apis";
-import { returnChats } from "../../utils/hooks";
+import { returnChats,returnCurrentTimestamp } from "../../utils/hooks";
 
 const NewChat = ()=>{
     const dispatch = useDispatch();
     const [screensize,setScreenSize] = useState("");
     const [loading,setLoading] = useState(false);
     const contentRef = useRef(null);
-    const chats = useSelector((store)=>store?.chatStore?.chats)
+    const chats = useSelector((store)=>store?.chatStore?.chats);
     
     const chatsList = useMemo(()=>{
         return returnChats(chats)
@@ -45,20 +45,21 @@ const NewChat = ()=>{
 
     const setMessages = (text)=>{
         let id = chatsList.length+1;
+        let timeStamp = returnCurrentTimestamp();
         setLoading(true)
         dispatch(setChat({
-            id,question:text,response:"Responding..."
+            id,question:text,response:"Responding...",timeStamp
         }))
         fetchResponse(text,id).then((res)=>{
             setLoading(false)
             const {choices} = res;
             dispatch(setChat({
-                id,question:text,response:choices[0]?.message?.content,
+                id,question:text,response:choices[0]?.message?.content,timeStamp
             }))
         }).catch((err)=>{
             setLoading(false)
             dispatch(setChat({
-                id,question:text,response:"Some error occurred",
+                id,question:text,response:"Some error occurred",timeStamp
             }))
         }).finally(()=>{
             setLoading(false)

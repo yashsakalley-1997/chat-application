@@ -9,7 +9,7 @@ import TaskCard from "./TaskCard/TaskCard";
 
 import { iconLink } from "../../utils/imageLinks";
 
-import { returnTaskChats, noLoadingObject } from "../../utils/hooks";
+import { returnTaskChats, noLoadingObject, returnTasksCreated,currentTime, returnFormattedDate } from "../../utils/hooks";
 import { scheduleTasks } from "../../utils/apis";
 import { setTaskChat } from "../../store/taskManagerStore";
 import { setLocalStorage } from "../../utils/setTasks";
@@ -24,7 +24,45 @@ const TaskManager = ()=>{
     const chatsList = useMemo(()=>{
         return returnTaskChats(chats)
     },[JSON.stringify(chats)])
+    
+    
+    const getUpcomingTask = useMemo(()=>{
+        const tasksList = returnTasksCreated(chats).filter((elem)=>{
+            return new Date(elem?.startDate)>new Date();
+        });
+        const minDateTime =
+            tasksList.length > 0
+                ? tasksList.reduce((min, currentObj) => {
+                    const currentDateTime = new Date(currentObj.startDate);
+                    const minDateTime = new Date(min?.startDate);
 
+                    return currentDateTime < minDateTime ? currentObj : min;
+                }, tasksList[0])
+                : null;
+        return minDateTime
+    },[chats])
+
+    // console.lo
+    
+    useEffect(()=>{
+        let isYetToDispatch = true;
+        const interval = setInterval(()=>{
+            if(currentTime() === returnFormattedDate(getUpcomingTask?.startDate)){
+                if(isYetToDispatch){
+                    dispatch(setTaskChat({
+                        id:chatsList.length+1,
+                        question:"Task Reminder",
+                        response:getUpcomingTask
+                    }))
+                    isYetToDispatch = false;
+                }
+            }
+        },2000)
+        return ()=>{
+            clearInterval(interval)
+        }
+    },[JSON.stringify(chats)])
+    
     useEffect(() => {
         const updateScreenSize = () => {
             const width = window.innerWidth;

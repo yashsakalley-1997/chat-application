@@ -5,9 +5,11 @@ export const MessageCard = ({message}) =>{
         <div className="mb-10 ml-5 md:ml-24 flex flex-col gap-5 mt-10">
             <div className="flex gap-2">
                 <div className="w-9 h-9 bg-violet-500 rounded-full flex items-center justify-center text-white">Y</div>
-
                 <div className="text-white">
-                    <h3 className="text-white font-semibold text-2xl">You</h3>
+                    <h3 className="flex gap-5">
+                        <div className="text-white font-semibold text-2xl">You</div>
+                        <div className="text-white mt-2 italic">{message?.timeStamp}</div>
+                    </h3>
                     <span className="capitalize">{message?.question}</span>
                 </div>
             </div>
