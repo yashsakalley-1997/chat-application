@@ -1,4 +1,11 @@
-# Getting Started with Create React App
+# Getting Started with Chat Application
+
+## About the project.
+Contains 4 major components
+### Chat Application.
+### Weather App.
+### News Application.
+### Task Manager Application. 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
