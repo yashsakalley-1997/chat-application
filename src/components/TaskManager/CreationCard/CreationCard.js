@@ -56,11 +56,11 @@ const CreationCard = ({message})=>{
                 </div>
                 <div className="flex justify-between gap-2">
                     <span>Task End Date</span>
-                    <input ref={endDate} type="datetime-local" className="p-2 rounded-lg border border-gray-400 focus:outline-none"/>    
+                    <input ref={endDate} required type="datetime-local" className="p-2 rounded-lg border border-gray-400 focus:outline-none"/>    
                 </div>
                 <div className="flex justify-between gap-2">
                     <span>Link Notes</span>
-                    <input ref={linkNotes} type="text" placeholder="Notes" className="p-2 rounded-lg border border-gray-400 focus:outline-none"/>    
+                    <input ref={linkNotes} required type="text" placeholder="Notes" className="p-2 rounded-lg border border-gray-400 focus:outline-none"/>    
                 </div>
                 <button onClick={()=>onFormSubmit()} className="bg-blue-400 p-2 rounded-lg">Submit</button>
                 <button
