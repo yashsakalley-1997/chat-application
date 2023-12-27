@@ -12,7 +12,7 @@ const NavBar = ()=>{
             </div>
             {
                 navMenu.map((elem,index)=>(
-                    <div onClick={()=>navigate(elem?.link)} className={`mb-3 p-3 ${pathname === elem?.link?"bg-[#202123] rounded-lg":""}`} key={index}>
+                    <div onClick={()=>navigate(elem?.link)} className={`mb-3 cursor-pointer p-3 ${pathname === elem?.link?"bg-[#202123] rounded-lg":""}`} key={index}>
                         {elem?.displayName}
                     </div>
                 ))
